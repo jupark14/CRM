@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import CircularProgrss from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -14,7 +15,7 @@ const styles = {
   root: {
     width: "100%",
     overflowX: "visible"
-    },
+  },
   table: {
     minWidth: 1080,
   },
@@ -31,34 +32,26 @@ const styles = {
 //   },
 // });
 
+class App extends Component {
 
-const customers = [
-  {
-    'id': '111111',
-    'image': 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQhBasAtPgN_RDTZ56mA8a2HBAqum7KXg6KeQ&usqp=CAU',
-    'name': '박지우',
-    'department': 'Digital Innovation Lab',
-    'rank': 'Manager'
-  },
-  {
-    'id': '222222',
-    'image': 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQhBasAtPgN_RDTZ56mA8a2HBAqum7KXg6KeQ&usqp=CAU',
-    'name': '김민석',
-    'department': 'Digital Innovation Lab',
-    'rank': 'Manager'
-  },
-  {
-    'id': '333333',
-    'image': 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQhBasAtPgN_RDTZ56mA8a2HBAqum7KXg6KeQ&usqp=CAU',
-    'name': '윤새하',
-    'department': 'Digital Innovation Lab',
-    'rank': 'Manager'
-  }]
+  state = {
+    customers: ""
+  }
 
+  componentDidMount() {
+    this.callApi()
+      .then(res => this.setState({ customers: res }))
+      .catch(err => console.log(err));
+  }
 
-class App extends Component{
+  callApi = async () => {
+    const response = await fetch('/api/customers');
+    const body = await response.json();
+    return body;
+  }
+
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
@@ -72,14 +65,14 @@ class App extends Component{
             </TableRow>
           </TableHead>
           <TableBody>
-            {customers.map(c => {
-              return <Customer key={c.id} id={c.id} image={c.image} name={c.name} department={c.department} rank={c.rank} />
-            })}
+            {this.state.customers ? this.state.customers.map(c => {
+                return <Customer key={c.id} id={c.id} image={c.image} name={c.name} department={c.department} rank={c.rank} />
+              }):""}
           </TableBody>
         </Table>
       </Paper>
     );
-  } 
+  }
 }
 
 export default withStyles(styles)(App);
