@@ -1,0 +1,11 @@
+{
+  "host": "management.cdt6xbkbbbvx.us-east-2.rds.amazonaws.com",
+
+  "user": "user",
+
+  "password": "wntkfkd87",
+
+  "port": "3306",
+
+  "database": "management"
+}

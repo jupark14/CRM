@@ -121,3 +121,19 @@ export default withStyles(styles)(App);
 //     </Paper>
 //   );
 // }
+
+//react hook을 이용한 구현 참고
+// ... 
+// const [completed, setCompleted] = useState(0);
+// ...
+// useEffect(() => {
+//     setTimeout(
+//       progress , 20
+//     );
+//     callApi().then(res => setCustomers(res)).catch(err => console.log(err));
+//   }, [completed]);
+// ...
+// const progress = () => {
+//     setCompleted(completed >= 100 ? 0 : completed + 1);
+//   }
+// ...
